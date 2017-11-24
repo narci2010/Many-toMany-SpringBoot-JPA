@@ -1,56 +1,64 @@
 package me.moosecanswim.manytomany.Model;
 
-import javax.persistence.*;
 import java.util.Set;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
+@JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","movies"})
 public class Actor {
-    @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private long id;
-    private String name;
-    private String realname;
-    @ManyToMany(mappedBy = "cast")
-    private Set<Movie> movies;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
+	private String name;
+	private String realname;
 
-    public long getId() {
-        return id;
-    }
+	 
+	@ManyToMany(mappedBy = "actors", fetch = FetchType.EAGER)
+	private Set<Movie> movies;
 
-    public void setId(long id) {
-        this.id = id;
-    }
+	public long getId() {
+		return id;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setId(long id) {
+		this.id = id;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getRealname() {
-        return realname;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setRealname(String realname) {
-        this.realname = realname;
-    }
+	public String getRealname() {
+		return realname;
+	}
 
-    public Set<Movie> getMovies() {
-        return movies;
-    }
+	public void setRealname(String realname) {
+		this.realname = realname;
+	}
 
-    public void setMovies(Set<Movie> movies) {
-        this.movies = movies;
-    }
-//    public void addMovie(Movie aMovie){
-//        System.out.println("addind a movie: " + aMovie.toString());
-//        this.movies.add(aMovie);
-//    }
-    @Override
-    public String toString(){
-        return this.name;
-    }
+	public Set<Movie> getMovies() {
+		return movies;
+	}
+
+	public void setMovies(Set<Movie> movies) {
+		this.movies = movies;
+	}
+
+	@Override
+	public String toString() {
+		return this.name;
+	}
 
 }
